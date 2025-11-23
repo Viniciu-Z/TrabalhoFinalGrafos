@@ -28,12 +28,33 @@ def vizinhanca(grafo, vertice):
     return vizinhos
 
 def graus(grafo, vertice):
-    grau = 0
-    for chegando in grafo.vertices:
-        if chegando == vertice:
-            grau += len(grafo.vertices[chegando])
+    grau = len(grafo.vertices[vertice])
 
-        for vizinho, peso in grafo.vertices[chegando]:
-            if vizinho == vertice:
-                grau += 1
+    if isinstance(grafo, Digrafo.Grafo):
+        for chegando in grafo.vertices:
+            for vizinho, peso in grafo.vertices[chegando]:
+                if vizinho == vertice:
+                    grau += 1
     return grau
+
+def pesoDaAresta(grafo, vertice, vizinho):
+    for destino, peso in grafo.vertices[vertice]:
+        if destino == vizinho:
+            return peso
+    return None
+
+def maiorGrau(grafo):
+    maior = 0
+    for vertice in grafo.vertices:
+        grau = graus(grafo, vertice)
+        if grau > maior:
+            maior = grau
+    return maior
+
+def menorGrau(grafo):
+    menor = 100
+    for vertice in grafo.vertices:
+        grau = graus(grafo, vertice)
+        if grau < menor:
+            menor = grau
+    return menor

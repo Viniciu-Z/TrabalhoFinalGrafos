@@ -26,7 +26,10 @@ def main():
     # print(f"quantidade de vertices no grafo {verticesNoGrafo(grafo)}")
     # print(f"quantidade de arestas no grafo {arestasNoGrafo(grafo)}")
     # print(vizinhanca(digrafo, "E"))
-    print(graus(digrafo, "E"))
+    # print(graus(digrafo, "D"))
+    # print(pesoDaAresta(digrafo,"A","B"))
+    # print(maiorGrau(digrafo))
+    # print(menorGrau(digrafo))
 
 
 if __name__ == "__main__":
