@@ -1,3 +1,4 @@
+from collections import deque
 from Grafos import Digrafo
 
 def verticesNoDigrafo(digrafo):
@@ -63,3 +64,22 @@ def menorGrauDigrafo(digrafo):
             verticeMenorGrau = vertice
 
     return (verticeMenorGrau, menor)
+
+def bfsDigrafo(digrafo, vertice):
+    visitados = []
+    fila = deque(vertice)
+    ordemDaVisita = []
+    distancia = {vertice: 0}
+    predecesor = {}
+
+    while fila:
+        vertice = fila.popleft()
+        if vertice not in visitados:
+            visitados.append(vertice)
+            ordemDaVisita.append(vertice)
+            for vizinho, peso in digrafo.vertices[vertice]:
+                if vizinho not in visitados and vizinho not in fila:
+                    distancia[vizinho] = distancia[vertice] + peso
+                    predecesor[vizinho] = vertice
+                    fila.append(vizinho)
+    return ordemDaVisita, distancia, predecesor

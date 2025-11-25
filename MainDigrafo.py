@@ -11,7 +11,7 @@ def main():
     digrafo.adicionarConexoes("D", "E", 1)  # D -> E
 
     digrafo.mostrarGrafo()
-
+    '''
     print(f"quantidade de vertices no grafo {verticesNoDigrafo(digrafo)}")
     print(f"quantidade de arestas no grafo {arestasNoDigrafo(digrafo)}")
     print(f"D: {vizinhancaDigrafo(digrafo, "D")}")
@@ -19,6 +19,11 @@ def main():
     print(f"Peso da aresta B -> D: {pesoArestaDigrafo(digrafo, 'B', 'D')}")
     print(f"Vertice com maior grau: {maiorGrauDigrafo(digrafo)}")
     print(f"Vertice com o menor grau: {menorGrauDigrafo(digrafo)}")
+    '''
+    ordem, distancias, filas = bfsDigrafo(digrafo, "A")
+    print(f"ordem: {ordem}")
+    print(f"distancias: {distancias}")
+    print(f"filas: {filas}")
 
 if __name__ == "__main__":
     main()
