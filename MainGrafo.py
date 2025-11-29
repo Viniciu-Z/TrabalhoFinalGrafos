@@ -17,7 +17,7 @@ def main():
     grafo.adicionarConexoes('D', 'E', 10)
     grafo.adicionarConexoes('E', 'F', 5)
 
-    grafo.mostrarGrafo()
+    #grafo.mostrarGrafo()
     '''
     print(f"quantidade de vertices no grafo {verticesNoGrafo(grafo)}")
     print(f"quantidade de arestas no grafo {arestasNoGrafo(grafo)}")
@@ -36,12 +36,18 @@ def main():
     print(f"Ordem de visita: {pi}")
     print(f"inicio: {inicio}")
     print(f"fim: {fim}")
-    '''
-
+    
     distancias, visitados = bellmanfordGrafo(grafo, "A")
     print(f"distancias: {distancias}")
     print(f"visitados: {visitados}")
+    '''
 
+    distancias, predecesor = dijkstraGrafo(grafo, "A")
+    print(distancias)
+    print(predecesor)
+
+#{'A': 0, 'B': 11, 'C': 18, 'D': 19, 'F': 12, 'E': 17}
+#{'A': None, 'B': 'A', 'C': 'A', 'D': 'B', 'F': 'A', 'E': 'F'}
 
 if __name__ == "__main__":
     main()

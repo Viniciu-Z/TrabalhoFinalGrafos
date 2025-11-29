@@ -1,3 +1,4 @@
+import heapq
 from collections import deque
 from collections import defaultdict
 from Grafos import Grafo
@@ -81,7 +82,7 @@ def dfsGrafo(grafo, verticeInicial):
     inicio = {}
     fim = {}
 
-    def dfs_visita(vertice):
+    def dfsVisita(vertice):
         nonlocal tempo
         visitados.add(vertice)
 
@@ -91,12 +92,12 @@ def dfsGrafo(grafo, verticeInicial):
         for vizinho, peso in grafo.vertices[vertice]:
             if vizinho not in visitados:
                 pi[vizinho] = vertice
-                dfs_visita(vizinho)
+                dfsVisita(vizinho)
 
         tempo += 1
         fim[vertice] = tempo
 
-    dfs_visita(verticeInicial)
+    dfsVisita(verticeInicial)
     return pi, inicio, fim
 
 def bellmanfordGrafo(grafo, verticeInicial):
@@ -119,8 +120,41 @@ def bellmanfordGrafo(grafo, verticeInicial):
     for vertice in grafo.vertices:
         for vizinho, peso in grafo.vertices[vertice]:
             if distancias[vertice] + peso < distancias[vizinho]:
-                print("Ciclo negativo detectado!")
+                print("Ciclo negativo")
                 return None, None
 
     return visitados, distancias
+
+def dijkstraGrafo(grafo, verticeInicial):
+    heap = [(0, verticeInicial)]
+    distancias = {}
+    predecesor = {}
+    visitados = []
+
+    for vertice in grafo.vertices:
+        distancias[vertice] = float('inf')
+        predecesor[vertice] = None
+    distancias[verticeInicial] = 0
+
+    while heap:
+
+        distancia, vertice = heapq.heappop(heap)
+
+        if vertice not in visitados:
+            for vizinho, peso in grafo.vertices[vertice]:
+                novaDistancia = distancia + peso
+                if novaDistancia < distancias[vizinho]:
+                    distancias[vizinho] = novaDistancia
+                    predecesor[vizinho] = vertice
+                    heapq.heappush(heap, (novaDistancia, vizinho))
+
+    return distancias, predecesor
+
+
+
+
+
+
+
+
 
