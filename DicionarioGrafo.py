@@ -14,11 +14,11 @@ def arestasNoGrafo(grafo):
             arestas.add(aresta)
     return len(arestas)
 
-def vizinhancaGrafo(grafo, inicio):
-    return grafo.vertices[inicio]
+def vizinhancaGrafo(grafo, vertice):
+    return grafo.vertices[vertice]
 
-def grauGrafo(grafo, inicio):
-    return len(grafo.vertices[inicio])
+def grauGrafo(grafo, vertice):
+    return len(grafo.vertices[vertice])
 
 def pesoArestaGrafo(grafo, verticeInicial, verticeFinal):
     for destino, peso in grafo.vertices[verticeInicial]:
@@ -165,19 +165,3 @@ def coloracaoGrafo(grafo):
         cores[vertice] = cor
 
     return cores
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
