@@ -1,6 +1,6 @@
 import heapq
-from collections import deque
-from collections import defaultdict
+import random
+from collections import deque, defaultdict
 from Grafos import Grafo
 
 def verticesNoGrafo(grafo):
@@ -147,6 +147,31 @@ def dijkstraGrafo(grafo, inicio):
                     heapq.heappush(heap, (novaDistancia, vizinho))
 
     return distancias, ordem
+
+def coloracaoGrafo(grafo):
+    cores = {}
+    for vertice in grafo.vertices:
+        cores[vertice] = None
+
+    for vertice in grafo.vertices:
+        coresUsadas = []
+
+        for vizinho, peso in grafo.vertices[vertice]:
+            if cores[vizinho] is not None:
+                coresUsadas.append(cores[vizinho])
+        cor = 1
+        while cor in coresUsadas:
+            cor += 1
+        cores[vertice] = cor
+
+    return cores
+
+
+
+
+
+
+
 
 
 
