@@ -14,15 +14,15 @@ def arestasNoGrafo(grafo):
             arestas.add(aresta)
     return len(arestas)
 
-def vizinhancaGrafo(grafo, vertice):
-    return grafo.vertices[vertice]
+def vizinhancaGrafo(grafo, inicio):
+    return grafo.vertices[inicio]
 
-def grauGrafo(grafo, vertice):
-    return len(grafo.vertices[vertice])
+def grauGrafo(grafo, inicio):
+    return len(grafo.vertices[inicio])
 
-def pesoArestaGrafo(grafo, vertice, vizinho):
-    for destino, peso in grafo.vertices[vertice]:
-        if destino == vizinho:
+def pesoArestaGrafo(grafo, verticeInicial, verticeFinal):
+    for destino, peso in grafo.vertices[verticeInicial]:
+        if destino == verticeFinal:
             return peso
     return None
 
@@ -52,70 +52,69 @@ def menorGrauGrafo(grafo):
 
     return (verticeMenorGrau, menor)
 
-def bfsGrafo(grafo, vertice):
+def bfsGrafo(grafo, inicio):
     visitados = []
-    fila = deque(vertice)
-    ordemDaVisita = []
-    distancia = {vertice: 0}
-    predecesor = {}
+    fila = deque(inicio)
+    distancias = {inicio: 0}
+    ordem = {}
 
     while fila:
         vertice = fila.popleft()
 
         if vertice not in visitados:
             visitados.append(vertice)
-            ordemDaVisita.append(vertice)
 
             for vizinho, peso in grafo.vertices[vertice]:
                 if vizinho not in visitados and vizinho not in fila:
-                    distancia[vizinho] = distancia[vertice] + peso
-                    predecesor[vizinho] = vertice
+                    distancias[vizinho] = distancias[vertice] + peso
+                    ordem[vizinho] = vertice
                     fila.append(vizinho)
-
-    return ordemDaVisita, distancia, predecesor
+    return ordem, distancias
 
 def dfsGrafo(grafo, verticeInicial):
     tempo = 0
-    visitados = set()
-
-    pi = {v: None for v in grafo.vertices}
+    visitados = []
     inicio = {}
     fim = {}
 
+    ordem = {}
+    for vertice in grafo.vertices:
+        ordem[vertice] = None
+
     def dfsVisita(vertice):
         nonlocal tempo
-        visitados.add(vertice)
+        visitados.append(vertice)
 
         tempo += 1
         inicio[vertice] = tempo
 
         for vizinho, peso in grafo.vertices[vertice]:
             if vizinho not in visitados:
-                pi[vizinho] = vertice
+                ordem[vizinho] = vertice
                 dfsVisita(vizinho)
 
         tempo += 1
         fim[vertice] = tempo
 
     dfsVisita(verticeInicial)
-    return pi, inicio, fim
+    return ordem, inicio, fim
 
-def bellmanfordGrafo(grafo, verticeInicial):
+def bellmanfordGrafo(grafo, inicio):
     distancias = {}
-    visitados = {}
+    ordem = {}
 
     for vertice in grafo.vertices:
         distancias[vertice] = float('inf')
-        visitados[vertice] = None
+        ordem[vertice] = None
 
-    distancias[verticeInicial] = 0
+    distancias[inicio] = 0
 
     for _ in range(len(grafo.vertices) - 1):
         for vertice in grafo.vertices:
             for vizinho, peso in grafo.vertices[vertice]:
                 if distancias[vertice] + peso < distancias[vizinho]:
                     distancias[vizinho] = distancias[vertice] + peso
-                    visitados[vizinho] = vertice
+                    ordem[vizinho] = vertice
 
     for vertice in grafo.vertices:
         for vizinho, peso in grafo.vertices[vertice]:
@@ -123,21 +122,20 @@ def bellmanfordGrafo(grafo, verticeInicial):
                 print("Ciclo negativo")
                 return None, None
 
-    return visitados, distancias
+    return ordem, distancias
 
-def dijkstraGrafo(grafo, verticeInicial):
-    heap = [(0, verticeInicial)]
+def dijkstraGrafo(grafo, inicio):
+    heap = [(0, inicio)]
     distancias = {}
-    predecesor = {}
+    ordem = {}
     visitados = []
 
     for vertice in grafo.vertices:
         distancias[vertice] = float('inf')
-        predecesor[vertice] = None
-    distancias[verticeInicial] = 0
+        ordem[vertice] = None
+    distancias[inicio] = 0
 
     while heap:
-
         distancia, vertice = heapq.heappop(heap)
 
         if vertice not in visitados:
@@ -145,10 +143,10 @@ def dijkstraGrafo(grafo, verticeInicial):
                 novaDistancia = distancia + peso
                 if novaDistancia < distancias[vizinho]:
                     distancias[vizinho] = novaDistancia
-                    predecesor[vizinho] = vertice
+                    ordem[vizinho] = vertice
                     heapq.heappush(heap, (novaDistancia, vizinho))
 
-    return distancias, predecesor
+    return distancias, ordem
 
 
 

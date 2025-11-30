@@ -30,21 +30,21 @@ def main():
     ordem, distancias, filas = bfsGrafo(grafo, "A")
     print(f"ordem: {ordem}")
     print(f"distancias: {distancias}")
-    print(f"filas: {filas}")
-    
-    pi, inicio, fim = dfsGrafo(grafo, "A")
-    print(f"Ordem de visita: {pi}")
+    '''
+    ordem, inicio, fim = dfsGrafo(grafo, "A")
+    print(f"Ordem de visita: {ordem}")
     print(f"inicio: {inicio}")
     print(f"fim: {fim}")
-    
+    '''
     distancias, visitados = bellmanfordGrafo(grafo, "A")
     print(f"distancias: {distancias}")
     print(f"visitados: {visitados}")
-    '''
+    
 
     distancias, predecesor = dijkstraGrafo(grafo, "A")
     print(distancias)
     print(predecesor)
+    '''
 
 #{'A': 0, 'B': 11, 'C': 18, 'D': 19, 'F': 12, 'E': 17}
 #{'A': None, 'B': 'A', 'C': 'A', 'D': 'B', 'F': 'A', 'E': 'F'}
